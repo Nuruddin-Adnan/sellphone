@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 // import { AuthContext } from '../../../contexts/AuthProvider';
-// import './Navbar.css';
+import './Navbar.css';
 import { BsReverseLayoutTextSidebarReverse } from 'react-icons/bs';
+import { BiMobileVibration } from 'react-icons/bi';
 
 const Navbar = () => {
     // const { user, logOut } = useContext(AuthContext);
 
-    const user = true;
+    const user = false;
 
     const handleLogOut = () => {
         // logOut()
@@ -27,23 +28,26 @@ const Navbar = () => {
         </>
 
     return (
-        <header className='shadow-sm'>
+        <header className='shadow-sm bg-blue text-white'>
             <div className="navbar justify-between container">
                 <div>
-                    <div className='lg:hidden pl-4'>
-                        <label htmlFor="dashboard-sidenav" className="text-xl drawer-button"><BsReverseLayoutTextSidebarReverse /></label>
-                    </div>
+                    {
+                        user?.uid &&
+                        <div className='lg:hidden pl-4'>
+                            <label htmlFor="dashboard-sidenav" className="text-xl drawer-button"><BsReverseLayoutTextSidebarReverse /></label>
+                        </div>
+                    }
                     <div className="divider divider-horizontal mr-0 lg:hidden"></div>
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                         </label>
-                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-box w-52 ">
+                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-box w-52 text-black">
                             {menuItems}
                         </ul>
                     </div>
                     <Link to='/' className='text-xl normal-case btn btn-ghost'>
-                        Doctors Portal
+                        <BiMobileVibration className='text-2xl mr-2'></BiMobileVibration> SellPhone
                     </Link>
                 </div>
 
@@ -60,8 +64,8 @@ const Navbar = () => {
 
 
                     {
-                        user?.uid ?
-                            <div className="dropdown dropdown-end mr-4 mt-[5px]">
+                        user ?
+                            <div className="dropdown dropdown-end mr-4 mt-[5px] text-black">
                                 <div tabIndex={0} className="avatar">
                                     <div className="w-12 rounded-full ring ring-base-300 ring-offset-base-100 ring-offset-2 cursor-pointer">
                                         <img src="https://placeimg.com/192/192/people" alt="avatar" />
@@ -74,7 +78,7 @@ const Navbar = () => {
                                 </ul>
                             </div>
                             :
-                            <Link to='/login' className="btn btn-gradient mr-4">Login</Link>
+                            <Link to='/login' className="btn btn-white mr-4">Login</Link>
                     }
                 </div>
             </div>

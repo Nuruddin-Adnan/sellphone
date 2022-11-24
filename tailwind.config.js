@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         'blue': '#2874F0',
+        'lightblue': '#0F99D6'
       }
     },
     container: {
