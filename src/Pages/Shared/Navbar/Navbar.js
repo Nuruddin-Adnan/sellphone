@@ -1,21 +1,20 @@
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-// import { AuthContext } from '../../../contexts/AuthProvider';
 import './Navbar.css';
 import { BsReverseLayoutTextSidebarReverse } from 'react-icons/bs';
 import { BiMobileVibration } from 'react-icons/bi';
+import { AuthContext } from '../../../contexts/AuthProvider';
 
 const Navbar = () => {
-    // const { user, logOut } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
 
-    const user = false;
 
     const handleLogOut = () => {
-        // logOut()
-        //     .then(() => {
-        //         localStorage.removeItem('accessToken');
-        //     })
-        //     .catch(error => console.error(error.message))
+        logOut()
+            .then(() => {
+                localStorage.removeItem('accessToken');
+            })
+            .catch(error => console.error(error.message))
     }
 
     const menuItems =
@@ -64,7 +63,7 @@ const Navbar = () => {
 
 
                     {
-                        user ?
+                        user?.uid ?
                             <div className="dropdown dropdown-end mr-4 mt-[5px] text-black">
                                 <div tabIndex={0} className="avatar">
                                     <div className="w-12 rounded-full ring ring-base-300 ring-offset-base-100 ring-offset-2 cursor-pointer">
