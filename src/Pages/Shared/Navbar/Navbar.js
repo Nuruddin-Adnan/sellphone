@@ -67,7 +67,7 @@ const Navbar = () => {
                             <div className="dropdown dropdown-end mr-4 mt-[5px] text-black">
                                 <div tabIndex={0} className="avatar">
                                     <div className="w-12 rounded-full ring ring-base-300 ring-offset-base-100 ring-offset-2 cursor-pointer">
-                                        <img src="https://placeimg.com/192/192/people" alt="avatar" />
+                                        <img src={user?.photoURL} alt="avatar" />
                                     </div>
                                 </div>
                                 <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
