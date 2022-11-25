@@ -77,7 +77,7 @@ const Navbar = () => {
                                     {
                                         isAdmin && <>
                                             <li>
-                                                <Link to='/dashboard/allBuyers'> <AiOutlineUser></AiOutlineUser> All Buyers</Link>
+                                                <Link to='/dashboard/allBuyers'> <AiOutlineUser></AiOutlineUser> Dashboard</Link>
                                             </li>
                                         </>
                                     }

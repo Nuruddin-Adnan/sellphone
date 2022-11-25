@@ -58,7 +58,10 @@ const SignUp = () => {
                         })
                 }
             })
-            .catch(error => setSignUpError(error.message))
+            .catch(error => {
+                setSignUpError(error.message);
+                setPreloader(false);
+            })
     }
 
     // save user data to database

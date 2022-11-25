@@ -21,13 +21,16 @@ const DashboardLayout = () => {
                     <div className="drawer-side">
                         <label htmlFor="dashboard-sidenav" className="drawer-overlay"></label>
                         <ul className="menu p-4 w-80">
-                            <li>
-                                {
-                                    isAdmin && <>
+                            {
+                                isAdmin && <>
+                                    <li>
                                         <NavLink to='/dashboard/allBuyers'> <AiOutlineUser></AiOutlineUser> All Buyers</NavLink>
-                                    </>
-                                }
-                            </li>
+                                    </li>
+                                    <li>
+                                        <NavLink to='/dashboard/allSellers'> <AiOutlineUser></AiOutlineUser> All Sellers</NavLink>
+                                    </li>
+                                </>
+                            }
                         </ul>
 
                     </div>

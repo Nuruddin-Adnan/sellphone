@@ -3,12 +3,12 @@ import React from 'react';
 import Loader from '../../../Shared/Loader/Loader';
 const Swal = require('sweetalert2')
 
-const AllBuyers = () => {
+const AllSellers = () => {
     // Queries
-    const { data: allBuyers = [], isLoading, refetch } = useQuery({
-        queryKey: ['allBuyers'],
+    const { data: allSellers = [], isLoading, refetch } = useQuery({
+        queryKey: ['allSellers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users/allBuyers`, {
+            const res = await fetch(`http://localhost:5000/users/allSellers`, {
                 headers: {
                     'Content-Type': 'application/json',
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -67,12 +67,12 @@ const AllBuyers = () => {
                     </thead>
                     <tbody>
                         {
-                            allBuyers.length === 0 ?
+                            allSellers.length === 0 ?
                                 <tr className='w-full'>
                                     <td className='text-error text-center w-full'>No User Found</td>
                                 </tr>
                                 :
-                                allBuyers.map((buyer, index) =>
+                                allSellers.map((buyer, index) =>
                                     <tr key={buyer._id}>
                                         <th>{index + 1}</th>
                                         <td>
@@ -105,4 +105,4 @@ const AllBuyers = () => {
     );
 };
 
-export default AllBuyers;
+export default AllSellers;
