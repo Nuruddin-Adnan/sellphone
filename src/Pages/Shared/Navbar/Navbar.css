@@ -1,8 +1,10 @@
 .menu :where(li:not(.menu-title):not(:empty))> :where(:not(ul).active),
 .menu :where(li:not(.menu-title):not(:empty))> :where(*:not(ul):active) {
-    background-color: #0645e6;
+    background-color: #2874F0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .menu :where(li:not(.menu-title):not(:empty))> :where(:not(ul).active:hover) {
-    background-color: #003bde;
+    background-color: #2874F0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }

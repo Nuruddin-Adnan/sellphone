@@ -3,10 +3,13 @@ import { Link, NavLink } from 'react-router-dom';
 import './Navbar.css';
 import { BsReverseLayoutTextSidebarReverse } from 'react-icons/bs';
 import { BiMobileVibration } from 'react-icons/bi';
+import { AiOutlineUser } from 'react-icons/ai';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import useAdmin from '../../../hooks/useAdmin';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const [isAdmin] = useAdmin(user?.email)
 
 
     const handleLogOut = () => {
@@ -71,6 +74,13 @@ const Navbar = () => {
                                     </div>
                                 </div>
                                 <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                                    {
+                                        isAdmin && <>
+                                            <li>
+                                                <Link to='/dashboard/allBuyers'> <AiOutlineUser></AiOutlineUser> All Buyers</Link>
+                                            </li>
+                                        </>
+                                    }
                                     <li><Link to='/dashboard'>Dashboard</Link></li>
                                     <li><Link to='/profile'>Profile</Link></li>
                                     <li><button onClick={handleLogOut}>Logout</button></li>

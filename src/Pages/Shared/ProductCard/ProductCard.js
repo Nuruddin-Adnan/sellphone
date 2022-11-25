@@ -6,7 +6,7 @@ const ProductCard = ({ product }) => {
     return (
         <div className="card bg-base-100 shadow-xl">
             <figure className='text-center relative'>
-                <div class="absolute top-0 right-0 p-4">
+                <div className="absolute top-0 right-0 p-4">
                     <Link className='w-6 h-6 text-red-600 bg-white rounded-full grid place-items-center shadow-xl tooltip tooltip-left' data-tip="Add to Wishlist">
                         <AiOutlineHeart className='text-lg'></AiOutlineHeart>
                         {/* <AiFillHeart className='text-lg'></AiFillHeart> */}
