@@ -1,0 +1,44 @@
+[
+    {
+        "_id": 1,
+        "name": "apple",
+        "color": "#2874F0",
+        "createdBy": "admin@sellphone.com",
+        "createdAt": "2022-11-20T09:00:53.040Z"
+    },
+    {
+        "_id": 1,
+        "name": "samsung",
+        "color": "#FBB903",
+        "createdBy": "admin@sellphone.com",
+        "createdAt": "2022-11-25T09:00:53.040Z"
+    },
+    {
+        "_id": 1,
+        "name": "nokia",
+        "color": "#FA4647",
+        "createdBy": "admin@sellphone.com",
+        "createdAt": "2022-11-06T09:00:53.040Z"
+    },
+    {
+        "_id": 1,
+        "name": "oppo",
+        "color": "#7782F9",
+        "createdBy": "admin@sellphone.com",
+        "createdAt": "2022-05-25T09:00:53.040Z"
+    },
+    {
+        "_id": 1,
+        "name": "realme",
+        "color": "#28A1EA",
+        "createdBy": "admin@sellphone.com",
+        "createdAt": "2022-09-25T09:00:53.040Z"
+    },
+    {
+        "_id": 1,
+        "name": "huawei",
+        "color": "#2AA876",
+        "createdBy": "admin@sellphone.com",
+        "createdAt": "2022-11-24T09:00:53.040Z"
+    }
+]
