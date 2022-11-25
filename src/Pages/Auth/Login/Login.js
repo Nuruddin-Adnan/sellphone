@@ -5,10 +5,12 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 import useToken from '../../../hooks/useToken';
 import { BiMobileVibration } from 'react-icons/bi';
 import { FcGoogle } from 'react-icons/fc';
+import { PreloaderContext } from '../../../contexts/PreloaderProvider/PreloaderProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { signIn, googleSignIn, passwordReset, notify } = useContext(AuthContext);
+    const { setPreloader } = useContext(PreloaderContext);
     const [loginError, setLoginError] = useState('');
 
     const [loginUserEmail, setLoginUserEmail] = useState('');
@@ -43,29 +45,29 @@ const Login = () => {
         googleSignIn()
             .then(result => {
                 const user = result.user;
-                // if (user) {
-                //     fetch(`http://localhost:5000/users?email=${user.email}`)
-                //         .then(res => res.json())
-                //         .then(data => {
-                //             if (data.length === 0) {
-                //                 saveUser(user.displayName, user.email);
-                //             }
-                //             else {
-                //                 notify('Login successfull');
-                //                 setLoginUserEmail(user.email);
-                //             }
-                //         })
+                if (user) {
+                    fetch(`http://localhost:5000/users?email=${user.email}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.length === 0) {
+                                saveUser(user.displayName, user.email, 'user', user.photoURL);
+                            }
+                            else {
+                                notify('Login successfull');
+                                setLoginUserEmail(user.email);
+                            }
+                        })
 
-                // }
+                }
             })
             .catch(error => setLoginError(error.message))
     }
 
 
     // save user data to database
-    const saveUser = (name, email) => {
+    const saveUser = (name, email, role = 'user', photoURL) => {
         const createdAt = new Date();
-        const user = { name, email, createdAt };
+        const user = { name, email, role, photoURL, createdAt };
         fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
@@ -76,9 +78,10 @@ const Login = () => {
             .then(res => res.json())
             .then(data => {
                 if (data) {
-                    notify('Login successfull');
+                    notify('user create successfully')
+                    setPreloader(false)
+                    setLoginUserEmail(email);
                     reset({ data: '' })
-                    setLoginUserEmail(user.email);
                 }
             })
     }

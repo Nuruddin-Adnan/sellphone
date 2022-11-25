@@ -5,10 +5,12 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 import useToken from '../../../hooks/useToken';
 import { BiMobileVibration } from 'react-icons/bi';
 import toast from 'react-hot-toast';
+import { PreloaderContext } from '../../../contexts/PreloaderProvider/PreloaderProvider';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { notify, createUser, updateUserProfile } = useContext(AuthContext);
+    const { setPreloader } = useContext(PreloaderContext);
     const [signUpError, setSignUpError] = useState('');
     const [createdUserEmail, setCreatedUserEmail] = useState('')
     const [token] = useToken(createdUserEmail);
@@ -25,6 +27,7 @@ const SignUp = () => {
 
     const hangleSignup = data => {
         setSignUpError('');
+        setPreloader(true);
 
         createUser(data.email, data.password)
             .then(result => {
@@ -47,8 +50,7 @@ const SignUp = () => {
                                 }
                                 updateUserProfile(userInfo)
                                     .then(() => {
-                                        console.log(user.displayName, user.email, data.role, imgData.data.url);
-                                        // saveUser(user.displayName, user.email, data.role, imgData.data.url);
+                                        saveUser(user.displayName, user.email, data.role, imgData.data.url);
                                     }).catch(error => setSignUpError(error.message))
                             } else {
                                 toast.error('something went wrong')
@@ -74,6 +76,7 @@ const SignUp = () => {
             .then(data => {
                 if (data) {
                     notify('user create successfully')
+                    setPreloader(false)
                     setCreatedUserEmail(email)
                     document.getElementById('signUpForm').reset();
                 }
