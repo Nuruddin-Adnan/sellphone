@@ -42,7 +42,7 @@ const ProductCard = ({ product }) => {
                 <div className="card-actions justify-between">
                     <h3 className='text-xl font-bold text-blue'>Price: $33</h3>
                 </div>
-                <button className="btn btn-blue">Book now</button>
+                <button className="btn btn-lg btn-blue">Book now</button>
             </div>
         </div>
     );

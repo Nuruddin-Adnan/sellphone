@@ -1,12 +1,12 @@
 import React from 'react';
 import ProductCard from '../../Shared/ProductCard/ProductCard';
 
-const AdvertisedProducts = () => {
+const LatestProducts = () => {
     return (
-        <section className='lg:pb-20 pb-10'>
+        <section className='lg:py-20 py-10'>
             <div className="container">
                 <div className="flex items-baseline pb-20">
-                    <h2 className='text-2xl font-bold text-center whitespace-nowrap'>Advertise Products</h2>
+                    <h2 className='text-2xl font-bold text-center whitespace-nowrap'>Latest Products</h2>
                     <hr className='w-full' />
                 </div>
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 lg:gap-8 gap-5">
@@ -19,4 +19,4 @@ const AdvertisedProducts = () => {
     );
 };
 
-export default AdvertisedProducts;
+export default LatestProducts;
