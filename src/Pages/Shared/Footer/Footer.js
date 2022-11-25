@@ -4,7 +4,7 @@ import { BiMobileVibration } from 'react-icons/bi';
 
 const Footer = () => {
     return (
-        <div className='bg-base-100 text-base-content'>
+        <div className='bg-base-200 text-base-content'>
             <footer className="footer p-10 container">
                 <div>
                     <Link to='/' className='text-xl flex font-bold text-blue'>
