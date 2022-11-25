@@ -3,13 +3,15 @@ import { Link, NavLink } from 'react-router-dom';
 import './Navbar.css';
 import { BsReverseLayoutTextSidebarReverse } from 'react-icons/bs';
 import { BiMobileVibration } from 'react-icons/bi';
-import { AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineDashboard, AiOutlineLogout } from 'react-icons/ai';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import useAdmin from '../../../hooks/useAdmin';
+import useSeller from '../../../hooks/useSeller';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
-    const [isAdmin] = useAdmin(user?.email)
+    const [isAdmin] = useAdmin(user?.email);
+    const [isSeller] = useSeller(user?.email);
 
 
     const handleLogOut = () => {
@@ -77,17 +79,22 @@ const Navbar = () => {
                                     {
                                         isAdmin && <>
                                             <li>
-                                                <Link to='/dashboard/allBuyers'> <AiOutlineUser></AiOutlineUser> Dashboard</Link>
+                                                <Link to='/dashboard/allBuyers'> <AiOutlineDashboard></AiOutlineDashboard> Dashboard</Link>
                                             </li>
                                         </>
                                     }
-                                    <li><Link to='/dashboard'>Dashboard</Link></li>
-                                    <li><Link to='/profile'>Profile</Link></li>
-                                    <li><button onClick={handleLogOut}>Logout</button></li>
+                                    {
+                                        isSeller && <>
+                                            <li>
+                                                <Link to='/dashboard/addProduct'> <AiOutlineDashboard></AiOutlineDashboard> Dashboard</Link>
+                                            </li>
+                                        </>
+                                    }
+                                    <li><button onClick={handleLogOut}> <AiOutlineLogout></AiOutlineLogout>Logout</button></li>
                                 </ul>
                             </div>
                             :
-                            <Link to='/login' className="btn btn-white mr-4">Login</Link>
+                            <Link to='/login' className="btn btn-white mr-4"> Login</Link>
                     }
                 </div>
             </div>
