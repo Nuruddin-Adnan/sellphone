@@ -25,10 +25,7 @@ const Navbar = () => {
     const menuItems =
         <>
             <li><NavLink to='/' className='rounded-lg'>Home</NavLink></li>
-            <li><NavLink to='/about' className='rounded-lg'> About </NavLink></li>
-            <li><NavLink to='/appointment' className='rounded-lg'> Appointment </NavLink></li>
-            <li><NavLink to='/reviews' className='rounded-lg'> Reviews </NavLink></li>
-            <li><NavLink to='/contact' className='rounded-lg'> Contact Us </NavLink></li>
+            <li><NavLink to='/blog' className='rounded-lg'>Blog</NavLink></li>
         </>
 
     return (
