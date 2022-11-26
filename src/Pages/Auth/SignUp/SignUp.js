@@ -8,8 +8,8 @@ import toast from 'react-hot-toast';
 import { PreloaderContext } from '../../../contexts/PreloaderProvider/PreloaderProvider';
 
 const SignUp = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
     const { notify, createUser, updateUserProfile } = useContext(AuthContext);
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const { setPreloader } = useContext(PreloaderContext);
     const [signUpError, setSignUpError] = useState('');
     const [createdUserEmail, setCreatedUserEmail] = useState('')

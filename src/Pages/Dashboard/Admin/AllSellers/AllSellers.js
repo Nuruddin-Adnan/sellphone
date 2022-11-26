@@ -51,9 +51,37 @@ const AllSellers = () => {
 
     }
 
+    const handleVarified = (id) => {
+        Swal.fire({
+            title: 'Do you want to Varify the Seller?',
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: 'Varified',
+            // denyButtonText: `Don't save`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/users/varify/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: `bearer ${localStorage.getItem('accessToken')}`
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.modifiedCount > 0) {
+                            refetch();
+                            Swal.fire('Varified!', '', 'success');
+                        }
+                    })
+            }
+        })
+
+    }
+
     return (
         <div>
-            <h2 className='text-3xl font-bold mb-5'>All Buyers </h2>
+            <h2 className='text-3xl font-bold mb-5'>All Sellers </h2>
             <div className="overflow-x-auto">
                 <table className="table table-compact w-full">
                     <thead>
@@ -93,6 +121,12 @@ const AllSellers = () => {
                                         <td>
                                             <div className="btn-group">
                                                 <button onClick={() => handleDelete(buyer._id)} className='btn btn-sm btn-error'>Delete</button>
+                                                {
+                                                    buyer?.varified ?
+                                                        <button className='btn btn-sm btn-blue'>Varified</button>
+                                                        :
+                                                        <button onClick={() => handleVarified(buyer._id)} className='btn btn-sm btn-warning'>Please Varify</button>
+                                                }
                                             </div>
                                         </td>
                                     </tr>
