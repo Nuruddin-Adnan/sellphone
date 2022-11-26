@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
 
         return (
             <div className="card bg-base-100 shadow-xl">
-                <figure className='text-center relative'>
+                <figure className='text-center relative pt-5'>
                     <div className="absolute top-0 right-0 p-4">
                         <button onClick={() => handleWishList(_id)} className='w-6 h-6 text-red-600 bg-white rounded-full grid place-items-center shadow-xl tooltip tooltip-left' data-tip="Add to Wishlist">
                             <AiOutlineHeart className='text-lg'></AiOutlineHeart>
@@ -47,8 +47,8 @@ const ProductCard = ({ product }) => {
                         <div className="badge badge-secondary"> {condition}</div>
 
                     </h2>
-                    <Link className="text-sm text-blue opacity-50 hover:underline hover:underline">{category}</Link>
-                    <p>{description.length > 100 ? description.slice(0, 100) + '...' : description}</p>
+                    <Link to={`category/${category}`} className="text-sm text-blue opacity-50  hover:underline">{category}</Link>
+                    <p>{description.length > 75 ? description.slice(0, 75) + '...' : description}</p>
                     <div className="flex items-center space-x-3">
                         <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
@@ -56,7 +56,10 @@ const ProductCard = ({ product }) => {
                             </div>
                         </div>
                         <div>
-                            <div className="font-bold flex items-center">{sellerInfo?.name} <span className='tooltip' data-tip="Verified User"><AiFillCheckCircle className='text-lg ml-1 text-success' /></span></div>
+                            <div className="font-bold flex items-center">
+                                {sellerInfo?.name}
+                                {sellerInfo?.varified && <span className='tooltip' data-tip="Verified Seller"><AiFillCheckCircle className='text-lg ml-1 text-success' /></span>}
+                            </div>
                             <div className="text-sm opacity-50">{location} <span>Published: {moment(publishedDate).format("Do MMM yyy")}</span></div>
                             <div className='text-sm opacity-50'></div>
                         </div>

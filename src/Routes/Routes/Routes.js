@@ -8,6 +8,7 @@ import AllSellers from "../../Pages/Dashboard/Admin/AllSellers/AllSellers";
 import AddProduct from "../../Pages/Dashboard/Seller/AddProduct/AddProduct";
 import MyProducts from "../../Pages/Dashboard/Seller/MyProducts/MyProducts";
 import Home from "../../Pages/Home/Home/Home";
+import CategoryProducts from "../../Pages/Products/CategoryProducts/CategoryProducts";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import SellerRoute from "../SellerRoute/SellerRoute";
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
                 path: '/signup',
                 element: <SignUp></SignUp>
             },
+            {
+                path: '/category/:name',
+                element: <PrivateRoute><CategoryProducts></CategoryProducts></PrivateRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5000/products/category/${params.name}`)
+            }
         ]
     },
     {
