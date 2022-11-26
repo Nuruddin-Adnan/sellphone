@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
-import toast from 'react-hot-toast';
 import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 import useSeller from '../../hooks/useSeller';
 import Loader from '../../Pages/Shared/Loader/Loader';
 
 const SellerRoute = ({ children }) => {
-    const { user, loading, logOut } = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
     const [isSeller, isSellerLoading] = useSeller(user?.email);
     const location = useLocation();
 
@@ -18,10 +17,6 @@ const SellerRoute = ({ children }) => {
         return children
     }
 
-    logOut()
-        .then(() => {
-            toast.error('You dont have permission')
-        })
 
     return <Navigate to="/login" state={{ from: location }} replace />;
 };
