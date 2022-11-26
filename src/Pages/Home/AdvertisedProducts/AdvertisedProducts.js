@@ -3,15 +3,15 @@ import ProductCard from '../../Shared/ProductCard/ProductCard';
 import axios from 'axios';
 
 const AdvertisedProducts = () => {
-    const [advertisedProducts, setSdvertisedProducts] = useState([]);
+    const [advertisedProducts, setAdvertisedProducts] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:5000/products/advertise')
             .then(res => {
-                setSdvertisedProducts(res.data)
+                setAdvertisedProducts(res.data)
             })
 
-    }, [setSdvertisedProducts])
+    }, [setAdvertisedProducts])
 
 
     if (advertisedProducts.length === 0) {

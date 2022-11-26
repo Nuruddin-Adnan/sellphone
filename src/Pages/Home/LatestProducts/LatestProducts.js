@@ -1,7 +1,18 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import ProductCard from '../../Shared/ProductCard/ProductCard';
 
 const LatestProducts = () => {
+    const [latestProducts, setLatestProducts] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/products?limit=3')
+            .then(res => {
+                setLatestProducts(res.data)
+            })
+
+    }, [setLatestProducts]);
+
     return (
         <section className='lg:py-20 py-10'>
             <div className="container">
@@ -10,9 +21,9 @@ const LatestProducts = () => {
                     <hr className='w-full' />
                 </div>
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 lg:gap-8 gap-5">
-                    <ProductCard></ProductCard>
-                    <ProductCard></ProductCard>
-                    <ProductCard></ProductCard>
+                    {
+                        latestProducts.map(latestProduct => <ProductCard key={latestProduct._id} product={latestProduct}></ProductCard>)
+                    }
                 </div>
             </div>
         </section>
