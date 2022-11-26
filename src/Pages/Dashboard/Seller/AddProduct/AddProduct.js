@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import Loader from '../../../Shared/Loader/Loader';
 
 const AddProduct = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [productError, setProductError] = useState(false);
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -28,12 +29,8 @@ const AddProduct = () => {
         }
     })
 
-    if (isLoading) {
-        return <Loader></Loader>
-    }
-
     const handleAddProduct = data => {
-        console.log(data);
+        setProductError(true)
         const image = data.image[0];
         const formData = new FormData();
         formData.append('image', image);
@@ -61,6 +58,7 @@ const AddProduct = () => {
                         publishedDate: new Date(),
                         status: 'available',
                         payment: 'unpaid',
+                        advertisement: false,
                     }
 
                     fetch('http://localhost:5000/products', {
@@ -73,20 +71,28 @@ const AddProduct = () => {
                     })
                         .then(res => res.json())
                         .then(data => {
-                            console.log(data);
+                            if (data.acknowledged) {
+                                setProductError(false)
+                                navigate('/dashboard/myProducts')
+                            }
                         })
 
                 } else {
-                    toast.error('something went wrong')
+                    toast.error('something went wrong');
+                    setProductError(false)
                 }
             })
+    }
+
+    if (isLoading || productError) {
+        return <Loader></Loader>
     }
 
     return (
         <div>
             <h2 className='text-3xl font-bold mb-5'>Add A product</h2>
             <div className="card bg-base-100">
-                <form id="addProductForm" onSubmit={handleSubmit(handleAddProduct)} className="card-body">
+                <form onSubmit={handleSubmit(handleAddProduct)} className="card-body">
                     <div className="form-control">
                         <label className="label"> <span className="label-text">Product Title</span> </label>
                         <input type="text" placeholder="Product title" className="input input-bordered" {...register("title", { required: 'Product Title field is required' })} />
@@ -113,7 +119,7 @@ const AddProduct = () => {
                             }
                         </div>
                         <div className="form-control">
-                            <label className="label"> <span className="label-text">Select a category</span> </label>
+                            <label className="label"> <span className="label-text"><span className='lg:inline hidden'>Select a</span> Category</span> </label>
                             <select className="select select-bordered"  {...register("category", { required: 'Category Title field is required' })}>
                                 {
                                     categories.map(category => <option key={category._id} defaultValue={category.name}>{category.name}</option>)
