@@ -58,7 +58,7 @@ const AddProduct = () => {
                         publishedDate: new Date(),
                         status: 'available',
                         payment: 'unpaid',
-                        advertisement: false,
+                        advertisement: 'notadvertised',
                     }
 
                     fetch('http://localhost:5000/products', {

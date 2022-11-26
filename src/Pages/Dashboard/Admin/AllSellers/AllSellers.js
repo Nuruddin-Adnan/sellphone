@@ -25,7 +25,7 @@ const AllSellers = () => {
 
     const handleDelete = (id) => {
         Swal.fire({
-            title: 'Do you want to Delete the Review?',
+            title: 'Do you want to Delete?',
             showDenyButton: false,
             showCancelButton: true,
             confirmButtonText: 'Delete',
@@ -68,8 +68,8 @@ const AllSellers = () => {
                     <tbody>
                         {
                             allSellers.length === 0 ?
-                                <tr className='w-full'>
-                                    <td className='text-error text-center w-full'>No User Found</td>
+                                <tr>
+                                    <td className='text-error text-center' colSpan="50">No User Found</td>
                                 </tr>
                                 :
                                 allSellers.map((buyer, index) =>

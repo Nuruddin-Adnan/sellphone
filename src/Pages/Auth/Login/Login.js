@@ -33,8 +33,8 @@ const Login = () => {
                 const user = result.user;
                 if (user) {
                     notify('Login successfull');
-                    reset({ data: '' });
                     setLoginUserEmail(user.email);
+                    reset({ data: '' });
                 }
             })
             .catch(error => setLoginError(error.message))

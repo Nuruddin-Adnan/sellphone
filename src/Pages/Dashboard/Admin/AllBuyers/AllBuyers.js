@@ -68,8 +68,8 @@ const AllBuyers = () => {
                     <tbody>
                         {
                             allBuyers.length === 0 ?
-                                <tr className='w-full'>
-                                    <td className='text-error text-center w-full'>No User Found</td>
+                                <tr>
+                                    <td className='text-error text-center' colSpan="50">No User Found</td>
                                 </tr>
                                 :
                                 allBuyers.map((buyer, index) =>
