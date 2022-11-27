@@ -16,7 +16,7 @@ const DashboardLayout = () => {
         <>
             <Navbar></Navbar>
             <div className="container my-5">
-                <div className="drawer drawer-mobile">
+                <div className="drawer drawer-mobile min-h-screen h-auto">
                     <input id="dashboard-sidenav" type="checkbox" className="drawer-toggle" />
                     <div className="drawer-content bg-[#F1F5F9] p-5">
                         {/* Dashboard content goes here */}

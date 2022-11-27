@@ -22,6 +22,12 @@ const Blog = () => {
                                 <li> URL state</li>
                             </ul>
                             <p>Let's cover each of these in detail:</p>
+                            <p>The built-in way that React provides for setting component states is by using setState() and adding “local state” to a class. There are several other ways to manage state​s in React, including the use of:</p>
+                            <ul className='list-disc pl-5'>
+                                <li> Hooks </li>
+                                <li> React Context API </li>
+                                <li> Apollo Link State </li>
+                            </ul>
                         </div>
                     </div>
                     <div className="card bg-base-100 shadow-xl">

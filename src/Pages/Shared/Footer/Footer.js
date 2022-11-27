@@ -1,8 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BiMobileVibration } from 'react-icons/bi';
+import { useQuery } from '@tanstack/react-query';
 
 const Footer = () => {
+    const { data: categories = [] } = useQuery({
+        queryKey: ['categories'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/categories');
+            const data = await res.json();
+            return data;
+        }
+    })
     return (
         <div className='bg-base-200 text-base-content'>
             <footer className="footer p-10 container">
@@ -18,11 +27,10 @@ const Footer = () => {
                     </div>
                 </div>
                 <div>
-                    <span className="footer-title">Services</span>
-                    <Link className="link link-hover">Branding</Link>
-                    <Link className="link link-hover">Design</Link>
-                    <Link className="link link-hover">Marketing</Link>
-                    <Link className="link link-hover">Advertisement</Link>
+                    <span className="footer-title">Category</span>
+                    {
+                        categories.map(category => <Link key={category._id} className="link link-hover">{category.name}</Link>)
+                    }
                 </div>
                 <div>
                     <span className="footer-title">Company</span>
