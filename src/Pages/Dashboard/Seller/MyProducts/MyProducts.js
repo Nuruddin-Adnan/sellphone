@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { AuthContext } from '../../../../contexts/AuthProvider';
 import Loader from '../../../Shared/Loader/Loader';
 import MyProductRow from './MyProductRow';
-const Swal = require('sweetalert2')
+const Swal = require('sweetalert2');
 
 const MyProducts = () => {
     const { user } = useContext(AuthContext);
@@ -30,10 +30,8 @@ const MyProducts = () => {
         fetch(url, {
             method: 'PUT',
             headers: {
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: `bearer ${localStorage.getItem('accessToken')}`
-                }
+                'Content-Type': 'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
             }
         })
             .then(res => res.json())
@@ -95,7 +93,6 @@ const MyProducts = () => {
                             <th></th>
                             <th>Product</th>
                             <th>Price</th>
-                            <th>Category</th>
                             <th>Sales Status</th>
                             <th>Action</th>
                         </tr>

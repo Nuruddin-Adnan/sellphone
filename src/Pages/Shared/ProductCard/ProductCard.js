@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
 
         if (product.category) {
             // get category id from category name
-            axios.get(`http://localhost:5000/categories/id/${product?.category}`)
+            axios.get(`http://localhost:5000/categories/catId/${product?.category}`)
                 .then(res => {
                     setCategoryName(res.data.name);
                 })

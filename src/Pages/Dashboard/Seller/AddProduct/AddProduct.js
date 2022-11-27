@@ -83,6 +83,10 @@ const AddProduct = () => {
                                     }
                                 })
                         })
+                        .catch(error => {
+                            toast.error('faild post post');
+                            setProductError(false)
+                        })
 
 
                 } else {

@@ -48,6 +48,36 @@ const ReportedProducts = () => {
 
     }
 
+    const handleRemoveReport = (id) => {
+        Swal.fire({
+            title: 'Remove from Report?',
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: 'Remove Report',
+            // denyButtonText: `Don't save`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/products/reported/remove/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: `bearer ${localStorage.getItem('accessToken')}`
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.modifiedCount > 0) {
+                            refetch();
+                            Swal.fire('Report Remove!', '', 'success');
+                        }
+                    }).catch(error => toast.error(error.message))
+            }
+        })
+
+    }
+
+
+
 
     if (isLoading) {
         return <Loader></Loader>
@@ -93,7 +123,7 @@ const ReportedProducts = () => {
                                         <td>
                                             <div className="btn-group">
                                                 <button onClick={() => handleDelete(product._id)} className='btn btn-sm btn-error'>Delete</button>
-                                                <button className='btn btn-sm btn-blue'>Remove Report</button>
+                                                <button onClick={() => handleRemoveReport(product._id)} className='btn btn-sm btn-blue'>Remove Report</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -102,7 +132,7 @@ const ReportedProducts = () => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 };
 
