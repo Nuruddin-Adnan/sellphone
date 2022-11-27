@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { Link, NavLink, useLoaderData } from 'react-router-dom';
+import { NavLink, useLoaderData } from 'react-router-dom';
 import ProductCard from '../../Shared/ProductCard/ProductCard';
 
 const CategoryProducts = () => {
