@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-const BookingModal = ({ product, user, modalId, setModalOpen }) => {
+const BookingModal = ({ product, user, modalId, setModalOpen, setIsBooked }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { displayName, email } = user;
     const { _id, title, price, image } = product;
@@ -16,7 +16,8 @@ const BookingModal = ({ product, user, modalId, setModalOpen }) => {
             price: price,
             user: email,
             phone: data.phone,
-            meetingLocation: data.meetingLocation
+            meetingLocation: data.meetingLocation,
+            paymentStatus: 'unpaid'
         }
 
         axios({
@@ -29,9 +30,9 @@ const BookingModal = ({ product, user, modalId, setModalOpen }) => {
             }
         })
             .then((data => {
-                console.log(data);
-                toast.success('Order Placed successfully')
+                toast.success('Order Placed! Please check my order page')
                 setModalOpen(false);
+                setIsBooked(true)
             }))
             .catch(error => toast.error(error.message));
 

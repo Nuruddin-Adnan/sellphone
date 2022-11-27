@@ -22,7 +22,7 @@ const Categories = () => {
                 <div className='grid lg:grid-cols-3 gap-5'>
                     {
                         categories.map(category =>
-                            <Link to={`/category/${category.name}`} key={category._id} className='card shadow-xl text-white hover:opacity-80' style={{ background: `${category.color}` }}>
+                            <Link to={`/category/${category._id}`} key={category._id} className='card shadow-xl text-white hover:opacity-80' style={{ background: `${category.color}` }}>
                                 <div className="card-body items-center text-center">
                                     <div className="font-bold card-title capitalize">{category.name}</div>
                                 </div>

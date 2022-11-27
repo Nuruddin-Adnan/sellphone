@@ -6,9 +6,11 @@ import SignUp from "../../Pages/Auth/SignUp/SignUp";
 import Blog from "../../Pages/Blog/Blog";
 import AllBuyers from "../../Pages/Dashboard/Admin/AllBuyers/AllBuyers";
 import AllSellers from "../../Pages/Dashboard/Admin/AllSellers/AllSellers";
+import MyOrders from "../../Pages/Dashboard/Buyer/MyOrders/MyOrders";
 import AddProduct from "../../Pages/Dashboard/Seller/AddProduct/AddProduct";
 import MyProducts from "../../Pages/Dashboard/Seller/MyProducts/MyProducts";
 import Home from "../../Pages/Home/Home/Home";
+import NotFound from "../../Pages/NotFound/NotFound";
 import CategoryProducts from "../../Pages/Products/CategoryProducts/CategoryProducts";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
@@ -36,9 +38,9 @@ const router = createBrowserRouter([
                 element: <Blog></Blog>
             },
             {
-                path: '/category/:name',
+                path: '/category/:id',
                 element: <PrivateRoute><CategoryProducts></CategoryProducts></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/products/category/${params.name}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/products/category/${params.id}`)
             }
         ]
     },
@@ -66,7 +68,15 @@ const router = createBrowserRouter([
                 path: '/dashboard/myBuyers',
                 element: <SellerRoute><div>MY Buyers</div></SellerRoute>
             },
+            {
+                path: '/dashboard/myorders',
+                element: <MyOrders></MyOrders>
+            },
         ]
+    },
+    {
+        path: '*',
+        element: <NotFound></NotFound>
     }
 ])
 

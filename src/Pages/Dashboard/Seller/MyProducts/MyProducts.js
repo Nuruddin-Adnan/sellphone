@@ -3,10 +3,12 @@ import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../../contexts/AuthProvider';
 import Loader from '../../../Shared/Loader/Loader';
+import MyProductRow from './MyProductRow';
 const Swal = require('sweetalert2')
 
 const MyProducts = () => {
     const { user } = useContext(AuthContext);
+
     // Queries
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products'],
@@ -79,8 +81,6 @@ const MyProducts = () => {
     }
 
 
-
-
     if (isLoading) {
         return <Loader></Loader>
     }
@@ -108,35 +108,14 @@ const MyProducts = () => {
                                 </tr>
                                 :
                                 products.map((product, index) =>
-                                    <tr key={product._id}>
-                                        <th>{index + 1}</th>
-                                        <td>
-                                            <div className="flex items-center space-x-3">
-                                                <div className="avatar">
-                                                    <div className="mask mask-squircle w-16 h-16">
-                                                        <img src={product?.image} alt="Avatar Tailwind CSS Component" />
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div className="font-bold">{product?.title}</div>
-                                                    <div className="text-sm opacity-50">{product?.publishedDate}</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>${product.price}</td>
-                                        <td className='uppercase'>{product.category}</td>
-                                        <td><span className={`badge ${product.status === 'available' ? 'badge-success' : 'badge-error'}`}>{product.status}</span></td>
-                                        <td>
-                                            <div className="btn-group">
-                                                <button onClick={() => handleDelete(product._id)} className='btn btn-sm btn-error'>Delete</button>
-                                                {
-                                                    (product?.status === 'available' && product?.advertisement === 'notadvertised') ?
-                                                        <button onClick={() => handleAdvertise(product._id, 'advertised')} className='btn btn-sm btn-blue'>Advertise now</button> :
-                                                        <button onClick={() => handleAdvertise(product._id, 'notadvertised')} className='btn btn-sm btn-secondary'>Remove Advertise</button>
-                                                }
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <MyProductRow
+                                        key={product._id}
+                                        product={product}
+                                        handleAdvertise={handleAdvertise}
+                                        handleDelete={handleDelete}
+                                        index={index}
+                                    >
+                                    </MyProductRow>
                                 )
                         }
                     </tbody>

@@ -24,7 +24,7 @@ const CategoryProducts = () => {
                                 <span>All Category</span>
                             </li>
                             {
-                                categories.map(category => <li key={category._id}><NavLink to={`/category/${category.name}`}>{category.name}</NavLink></li>)
+                                categories.map(category => <li key={category._id}><NavLink to={`/category/${category._id}`}>{category.name}</NavLink></li>)
                             }
 
                         </ul>

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
-import { AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/ai';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md';
 import { AuthContext } from '../contexts/AuthProvider';
 import useAdmin from '../hooks/useAdmin';
@@ -24,7 +24,7 @@ const DashboardLayout = () => {
                     </div>
                     <div className="drawer-side bg-base-100">
                         <label htmlFor="dashboard-sidenav" className="drawer-overlay"></label>
-                        <ul className="menu p-4 w-80">
+                        <ul className="menu p-4 w-80 bg-base-100">
                             {
                                 isAdmin && <>
                                     <li>
@@ -45,6 +45,13 @@ const DashboardLayout = () => {
                                     </li>
                                     <li>
                                         <NavLink to='/dashboard/myBuyers'> <AiOutlineUser></AiOutlineUser> My buyers</NavLink>
+                                    </li>
+                                </>
+                            }
+                            {
+                                !isSeller && !isAdmin && <>
+                                    <li>
+                                        <NavLink to='/dashboard/myorders'> <AiOutlineShoppingCart></AiOutlineShoppingCart> My Orders</NavLink>
                                     </li>
                                 </>
                             }

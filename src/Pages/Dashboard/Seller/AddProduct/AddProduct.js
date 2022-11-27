@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -43,39 +44,46 @@ const AddProduct = () => {
             .then(imgData => {
                 if (imgData.success) {
 
-                    const product = {
-                        title: data.title,
-                        condition: data.condition,
-                        category: data.category,
-                        location: data.location,
-                        price: data.price,
-                        buyingPrice: data.buyingPrice,
-                        buyingDate: data.buyingDate,
-                        pnone: data.pnone,
-                        image: imgData.data.url,
-                        description: data.description,
-                        seller: user.email,
-                        publishedDate: new Date(),
-                        status: 'available',
-                        payment: 'unpaid',
-                        advertisement: 'notadvertised',
-                    }
+                    // get category id from category name
+                    axios.get(`http://localhost:5000/categories/${data.category}`)
+                        .then(categoryData => {
+                            const categoryID = categoryData.data._id;
 
-                    fetch('http://localhost:5000/products', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            authorization: `bearer ${localStorage.getItem('accessToken')}`
-                        },
-                        body: JSON.stringify(product)
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.acknowledged) {
-                                setProductError(false)
-                                navigate('/dashboard/myProducts')
+                            const product = {
+                                title: data.title,
+                                condition: data.condition,
+                                category: categoryID,
+                                location: data.location,
+                                price: data.price,
+                                buyingPrice: data.buyingPrice,
+                                buyingDate: data.buyingDate,
+                                pnone: data.pnone,
+                                image: imgData.data.url,
+                                description: data.description,
+                                seller: user.email,
+                                publishedDate: new Date(),
+                                status: 'available',
+                                payment: 'unpaid',
+                                advertisement: 'notadvertised',
                             }
+
+                            fetch('http://localhost:5000/products', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                                },
+                                body: JSON.stringify(product)
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.acknowledged) {
+                                        setProductError(false)
+                                        navigate('/dashboard/myProducts')
+                                    }
+                                })
                         })
+
 
                 } else {
                     toast.error('something went wrong');

@@ -10,15 +10,43 @@ const ProductCard = ({ product }) => {
     const { user } = useContext(AuthContext);
     const [sellerInfo, setSellerInfo] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
+    const [isBooked, setIsBooked] = useState(false)
+    const [categoryName, setCategoryName] = useState('')
 
     useEffect(() => {
+
+
         if (product) {
             axios.get(`http://localhost:5000/users?email=${product.seller}`)
                 .then(res => {
                     setSellerInfo(res.data[0]);
+                });
+        }
+
+        // if (product.category) {
+        //     // get category id from category name
+        //     axios.get(`http://localhost:5000/categories/id/${product.category}`)
+        //         .then(res => {
+        //             setCategoryName(res.data.name);
+        //         })
+        // }
+
+        if (user?.uid) {
+            // get and set alredy bocked item
+            axios({
+                method: 'get',
+                url: `http://localhost:5000/orders/${user.email}?productId=${product._id}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
+                .then(res => {
+                    (res.data.length > 0) && setIsBooked(true);
                 })
         }
-    }, [product])
+
+    }, [product, user, isBooked])
 
     if (product) {
         const { _id, image, title, condition, price, category, buyingPrice, buyingDate, description, location, pnone, publishedDate } = product;
@@ -50,7 +78,7 @@ const ProductCard = ({ product }) => {
                             <div className="badge badge-secondary"> {condition}</div>
 
                         </h2>
-                        <Link to={`category/${category}`} className="text-sm text-blue opacity-50  hover:underline">{category}</Link>
+                        <Link to={`/category/${category}`} className="text-sm text-blue opacity-50  hover:underline">{categoryName}</Link>
                         <p>{description.length > 75 ? description.slice(0, 75) + '...' : description}</p>
                         <div className="flex items-center space-x-3">
                             <div className="avatar">
@@ -76,9 +104,10 @@ const ProductCard = ({ product }) => {
                             <h3 className='text-xl font-bold text-blue'>Price: ${price}</h3>
                         </div>
                         {
-                            user?.uid ?
-                                <label onClick={() => setModalOpen(true)} htmlFor={`booking${_id}`} className="btn btn-lg btn-blue">Book now</label> :
-                                <Link to='/login' className="btn btn-lg btn-blue">Login to Book</Link>
+                            isBooked ? <button className="btn btn-lg btn-blue" disabled>Booked!</button> :
+                                user?.uid ?
+                                    <label onClick={() => setModalOpen(true)} htmlFor={`booking${_id}`} className="btn btn-lg btn-blue">Book now</label> :
+                                    <Link to='/login' className="btn btn-lg btn-blue">Login to Book</Link>
                         }
                     </div>
                 </div>
@@ -87,6 +116,7 @@ const ProductCard = ({ product }) => {
                     user={user}
                     modalId={`booking${_id}`}
                     setModalOpen={setModalOpen}
+                    setIsBooked={setIsBooked}
                 >
                 </BookingModal>}
 

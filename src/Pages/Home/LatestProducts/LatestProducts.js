@@ -6,7 +6,7 @@ const LatestProducts = () => {
     const [latestProducts, setLatestProducts] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/products?limit=3')
+        axios.get('http://localhost:5000/products/available?limit=3')
             .then(res => {
                 setLatestProducts(res.data)
             })

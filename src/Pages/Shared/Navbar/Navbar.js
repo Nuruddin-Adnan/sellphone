@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { BsReverseLayoutTextSidebarReverse } from 'react-icons/bs';
 import { BiMobileVibration } from 'react-icons/bi';
@@ -12,12 +12,14 @@ const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
     const [isAdmin] = useAdmin(user?.email);
     const [isSeller] = useSeller(user?.email);
+    const navigate = useNavigate();
 
 
     const handleLogOut = () => {
         logOut()
             .then(() => {
                 localStorage.removeItem('accessToken');
+                navigate('/login')
             })
             .catch(error => console.error(error.message))
     }
@@ -84,6 +86,13 @@ const Navbar = () => {
                                         isSeller && <>
                                             <li>
                                                 <Link to='/dashboard/addProduct'> <AiOutlineDashboard></AiOutlineDashboard> Dashboard</Link>
+                                            </li>
+                                        </>
+                                    }
+                                    {
+                                        !isSeller && !isAdmin && <>
+                                            <li>
+                                                <Link to='/dashboard/myorders'> <AiOutlineDashboard></AiOutlineDashboard> My Orders</Link>
                                             </li>
                                         </>
                                     }
