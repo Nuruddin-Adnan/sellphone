@@ -3,6 +3,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
 import { AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/ai';
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md';
+import { FaRegFlag } from 'react-icons/fa';
 import { AuthContext } from '../contexts/AuthProvider';
 import useAdmin from '../hooks/useAdmin';
 import useSeller from '../hooks/useSeller';
@@ -32,6 +33,9 @@ const DashboardLayout = () => {
                                     </li>
                                     <li>
                                         <NavLink to='/dashboard/allSellers'> <AiOutlineUser></AiOutlineUser> All Sellers</NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to='/dashboard/reportedProducts'> <FaRegFlag></FaRegFlag> Reported Products</NavLink>
                                     </li>
                                 </>
                             }

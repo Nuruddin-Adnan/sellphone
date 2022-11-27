@@ -1,6 +1,15 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 const MyProductRow = ({ product, index, handleDelete, handleAdvertise }) => {
+    const [categoryName, setCategoryName] = useState('');
+    useEffect(() => {
+        // get category id from category name
+        axios.get(`http://localhost:5000/categories/id/${product?.category}`)
+            .then(res => {
+                setCategoryName(res.data.name);
+            })
+    }, [product])
 
     return (
         <tr>
@@ -19,8 +28,8 @@ const MyProductRow = ({ product, index, handleDelete, handleAdvertise }) => {
                 </div>
             </td>
             <td>${product.price}</td>
-            <td className='uppercase'>{product?.category}</td>
-            <td><span className={`badge ${product.status === 'available' ? 'badge-success' : 'badge-error'}`}>{product.status}</span></td>
+            <td className='uppercase'>{categoryName}</td>
+            <td><span className={`badge ${product?.status === 'available' ? 'badge-success' : 'badge-error'}`}>{product?.status}</span></td>
             <td>
                 <div className="btn-group">
                     <button onClick={() => handleDelete(product._id)} className='btn btn-sm btn-error'>Delete</button>

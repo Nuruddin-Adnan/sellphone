@@ -1,17 +1,20 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { AiFillCheckCircle, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiFillCheckCircle } from 'react-icons/ai';
+import { FaFlag } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import moment from 'moment';
 import BookingModal from '../BookingModal/BookingModal';
+import toast from 'react-hot-toast';
+const Swal = require('sweetalert2')
 
 const ProductCard = ({ product }) => {
     const { user } = useContext(AuthContext);
     const [sellerInfo, setSellerInfo] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [isBooked, setIsBooked] = useState(false)
-    const [categoryName, setCategoryName] = useState('')
+    const [categoryName, setCategoryName] = useState('');
 
     useEffect(() => {
 
@@ -23,13 +26,13 @@ const ProductCard = ({ product }) => {
                 });
         }
 
-        // if (product.category) {
-        //     // get category id from category name
-        //     axios.get(`http://localhost:5000/categories/id/${product.category}`)
-        //         .then(res => {
-        //             setCategoryName(res.data.name);
-        //         })
-        // }
+        if (product.category) {
+            // get category id from category name
+            axios.get(`http://localhost:5000/categories/id/${product?.category}`)
+                .then(res => {
+                    setCategoryName(res.data.name);
+                })
+        }
 
         if (user?.uid) {
             // get and set alredy bocked item
@@ -56,8 +59,35 @@ const ProductCard = ({ product }) => {
         // }
 
 
-        const handleWishList = (id) => {
-            console.log(id);
+        const handleReportToAdmin = (id) => {
+            if (!user?.uid) {
+                toast.error('Please login to report');
+                return;
+            }
+            Swal.fire({
+                title: 'Report to Admin?',
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: 'Yes Report',
+                // denyButtonText: `Don't save`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`http://localhost:5000/products/report/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            authorization: `bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.modifiedCount > 0) {
+                                Swal.fire('Reported!', '', 'success');
+                            }
+                        })
+                        .catch(error => toast.error(error.message))
+                }
+            })
         }
 
         return (
@@ -65,9 +95,8 @@ const ProductCard = ({ product }) => {
                 <div className="card bg-base-100 shadow-xl">
                     <figure className='text-center relative pt-5'>
                         <div className="absolute top-0 right-0 p-4">
-                            <button onClick={() => handleWishList(_id)} className='w-6 h-6 text-red-600 bg-white rounded-full grid place-items-center shadow-xl tooltip tooltip-left' data-tip="Add to Wishlist">
-                                <AiOutlineHeart className='text-lg'></AiOutlineHeart>
-                                {/* <AiFillHeart className='text-lg'></AiFillHeart> */}
+                            <button onClick={() => handleReportToAdmin(_id)} className='w-8 h-8 text-gray-500 bg-white rounded-full grid place-items-center  tooltip tooltip-left border' data-tip="Report to Admin">
+                                <FaFlag className='text-md'></FaFlag>
                             </button>
                         </div>
                         <img src={image} className='max-w-full h-[180px] object-cover' alt="Shoes" />
