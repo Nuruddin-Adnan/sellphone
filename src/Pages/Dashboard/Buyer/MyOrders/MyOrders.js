@@ -26,12 +26,45 @@ const MyOrders = () => {
         return <Loader></Loader>
     }
 
-    const makePayment = (orderId, productId) => {
+    const handleMakePayment = (orderId, productId) => {
         console.log(orderId, productId);
+
+        // update order ppaymentStatus
+        fetch(`http://localhost:5000/orders/${orderId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    refetch();
+                    toast.success('Payment successfull')
+                }
+            })
+            .catch(error => toast.error(error.message))
+
+        // update product selling status
+        fetch(`http://localhost:5000/products/status/${productId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    refetch();
+                    toast.success('Payment successfull with product status update')
+                }
+            })
+            .catch(error => toast.error(error.message))
     }
 
     const handleCancelOrder = id => {
-        console.log(id);
         fetch(`http://localhost:5000/orders/${id}`, {
             method: 'DELETE',
             headers: {
@@ -94,7 +127,7 @@ const MyOrders = () => {
                                                         <button className='btn btn-sm btn-success'>Paid</button>
                                                         :
                                                         <>
-                                                            <button onClick={() => makePayment(order._id, order.productId)} className='btn btn-sm btn-warning'>Pay Now</button>
+                                                            <button onClick={() => handleMakePayment(order._id, order.productId)} className='btn btn-sm btn-warning'>Pay Now</button>
                                                             <button onClick={() => handleCancelOrder(order._id)} className='btn btn-sm btn-error'>Cancel Order</button>
                                                         </>
                                                 }
