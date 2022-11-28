@@ -123,7 +123,7 @@ const AllSellers = () => {
                                                 <button onClick={() => handleDelete(buyer._id)} className='btn btn-sm btn-error'>Delete</button>
                                                 {
                                                     buyer?.varified ?
-                                                        <button className='btn btn-sm btn-blue'>Varified</button>
+                                                        <button className='btn btn-sm btn-blue'>Varified Seller</button>
                                                         :
                                                         <button onClick={() => handleVarified(buyer._id)} className='btn btn-sm btn-warning'>Please Varify</button>
                                                 }

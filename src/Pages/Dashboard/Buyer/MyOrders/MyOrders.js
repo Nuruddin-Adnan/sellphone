@@ -1,24 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../../../contexts/AuthProvider';
-import useAdmin from '../../../../hooks/useAdmin';
-import useSeller from '../../../../hooks/useSeller';
 import Loader from '../../../Shared/Loader/Loader';
 
 const MyOrders = () => {
     const { user } = useContext(AuthContext);
-    const navigate = useNavigate();
-    // const [isAdmin] = useAdmin(user?.email);
-    // const [isSeller] = useSeller(user?.email);
-
-    // if (isAdmin) {
-    //     navigate('/dashboard/allBuyers')
-    // }
-
-    // if (isSeller) {
-    //     navigate('/dashboard/addProduct')
-    // }
 
     // Queries
     const { data: myOrders = [], isLoading, refetch } = useQuery({
@@ -41,6 +28,24 @@ const MyOrders = () => {
 
     const makePayment = (orderId, productId) => {
         console.log(orderId, productId);
+    }
+
+    const handleCancelOrder = id => {
+        console.log(id);
+        fetch(`http://localhost:5000/orders/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    refetch();
+                    toast.success('Order cancel')
+                }
+            })
     }
 
     return (
@@ -83,8 +88,17 @@ const MyOrders = () => {
                                         <td>${order.price}</td>
                                         <td>{order.phone}</td>
                                         <td>
-                                            <button className='btn btn-sm btn-success'>Paid</button>
-                                            <button onClick={() => makePayment(order._id, order.productId)} className='btn btn-sm btn-error'>Pay Now</button>
+                                            <div className='btn-group'>
+                                                {
+                                                    order?.paymentStatus === 'paid' ?
+                                                        <button className='btn btn-sm btn-success'>Paid</button>
+                                                        :
+                                                        <>
+                                                            <button onClick={() => makePayment(order._id, order.productId)} className='btn btn-sm btn-warning'>Pay Now</button>
+                                                            <button onClick={() => handleCancelOrder(order._id)} className='btn btn-sm btn-error'>Cancel Order</button>
+                                                        </>
+                                                }
+                                            </div>
                                         </td>
                                     </tr>
                                 )

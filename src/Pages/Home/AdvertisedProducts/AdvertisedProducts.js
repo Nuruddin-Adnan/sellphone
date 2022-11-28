@@ -8,7 +8,8 @@ const AdvertisedProducts = () => {
     useEffect(() => {
         axios.get('http://localhost:5000/products/advertise')
             .then(res => {
-                setAdvertisedProducts(res.data)
+                const filteredProducts = res.data.filter(product => product.status !== 'sold')
+                setAdvertisedProducts(filteredProducts)
             })
 
     }, [setAdvertisedProducts])
@@ -17,6 +18,7 @@ const AdvertisedProducts = () => {
     if (advertisedProducts.length === 0) {
         return false;
     }
+
 
     return (
         <section className='lg:pb-20 pb-10'>

@@ -24,10 +24,14 @@ const MyProductRow = ({ product, index, handleDelete, handleAdvertise }) => {
             <td>
                 <div className="btn-group">
                     <button onClick={() => handleDelete(product._id)} className='btn btn-sm btn-error'>Delete</button>
-                    {
-                        (product?.status === 'available' && product?.advertisement === 'notadvertised') ?
-                            <button onClick={() => handleAdvertise(product._id, 'advertised')} className='btn btn-sm btn-blue'>Advertise now</button> :
-                            <button onClick={() => handleAdvertise(product._id, 'notadvertised')} className='btn btn-sm btn-secondary'>Remove Advertise</button>
+                    {product?.status === 'available' &&
+                        <>
+                            {
+                                (product?.advertisement === 'notadvertised') ?
+                                    <button onClick={() => handleAdvertise(product._id, 'advertised')} className='btn btn-sm btn-blue'>Advertise now</button> :
+                                    <button onClick={() => handleAdvertise(product._id, 'notadvertised')} className='btn btn-sm btn-secondary'>Remove Advertise</button>
+                            }
+                        </>
                     }
                 </div>
             </td>
